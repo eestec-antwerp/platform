@@ -1,10 +1,15 @@
 <template>
-<div>Hello world!</div>
-<login></login>
+<div>
+	this is news
+</div>
 </template>
 
 <script>
-alert("Hello world");
+export default {
+    data() {
+        return {}
+    }
+}
 </script>
 
 <style lang="scss">

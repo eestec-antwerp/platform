@@ -39,7 +39,10 @@ module.exports = {
 		]
 	},
 	resolve: {
-		extensions: ['', '.webpack.js', '.web.js', '.js', '.vue', '.json']
+		extensions: ['', '.webpack.js', '.web.js', '.js', '.vue', '.json'],
+		alias: {
+			'vue$': 'vue/dist/vue.common.js'
+		}
 	},
 	vue: {
   		loaders: {

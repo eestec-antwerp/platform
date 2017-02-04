@@ -21,10 +21,6 @@ class Job {
     setResult(result) {
         this.result = parseAnalysisResult(result);
     }
-    // Add outlier for this job
-    addOutlier(outlier) {
-        this.outliers.unshift(outlier);
-    }
 
     // Return the name for the column with the given index
     getNameFor(idx) {

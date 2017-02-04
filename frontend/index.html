@@ -16,7 +16,8 @@
 </head>
 
 <body>
-	
+<div id="app">
+
 <div class="navbar navbar-default" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
@@ -31,41 +32,19 @@
 			</p>
 		</div>
 		<div class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				
-				<li  class="active" >
-					<a href="/"> Home </a>
-				</li>
-				
-				<li >
-					<a href="/about/"> About </a>
-				</li>
-				
-				<li >
-					<a href="/board/"> Board </a>
-				</li>
-				
-				<li >
-					<a href="/vakantiewerk/"> Vakantiewerk </a>
-				</li>
-				
-			</ul>
+			<mainmenu class="nav navbar-nav"></mainmenu>
+			
 			<hr/>
+			
 			<ul class="nav navbar-nav">
-				
-<li> <a href="https://twitter.com/eestecantwerp"><i class="fa fa-twitter-square"></i> twitter</a>
-</li>
+				<li> <a href="https://twitter.com/eestecantwerp"><i class="fa fa-twitter-square"></i> twitter</a>
+				</li>
 
-<li> <a href="https://www.facebook.com/eestecantwerp"><i class="fa fa-facebook-square"></i> facebook</a>
-</li>
+				<li> <a href="https://www.facebook.com/eestecantwerp"><i class="fa fa-facebook-square"></i> facebook</a>
+				</li>
 
-<li> <a href="/index.xml"><i class="fa fa-rss-square"></i> rss</a>
-</li>
-
-<li> <a href="mailto:board@eestec.be"><i class="fa fa-envelope-square"></i> contact</a>
-</li>
-
-
+				<li> <a href="mailto:board@eestec.be"><i class="fa fa-envelope-square"></i> contact</a>
+				</li>
 			</ul>
 		</div>
 		
@@ -74,75 +53,46 @@
 
 
 <div id="sidebar-wrapper">
-	<ul class="sidebar-nav">
+	<ul class="sidebar-nav" style="padding-top: 30px">
 		<li class="sidebar-brand">
-			<a href="/" id="logo">
-			
-				<img src="/img/logo.svg" />
-			
-			</a>
-			<h3></h3>
+			<router-link to="/" id="logo">
+				<img src="/static/img/logo.svg" />
+			</router-link>
 		</li>
-		<hr /> 
-		<li  class="active" >
-			<a href="/"> Home </a>
-		</li>
-		
-		<li >
-			<a href="/about/"> About </a>
-		</li>
-		
-		<li >
-			<a href="/board/"> Board </a>
-		</li>
-		
-		<li >
-			<a href="/vakantiewerk/"> Vakantiewerk </a>
-		</li>
-		
-		<hr />
+	</ul>
+	
+	<hr />
+	
+	<mainmenu class="sidebar-nav"></mainmenu>
+	
+	<hr/>
+	
+	<ul class="sidebar-nav">
 		<div id="social-wrapper">
-			
-<li> <a href="https://twitter.com/eestecantwerp"><i class="fa fa-twitter-square"></i> twitter</a>
-</li>
+			<li><a href="https://twitter.com/eestecantwerp"><i class="fa fa-twitter-square"></i> twitter</a>
+			</li>
 
-<li> <a href="https://www.facebook.com/eestecantwerp"><i class="fa fa-facebook-square"></i> facebook</a>
-</li>
+			<li><a href="https://www.facebook.com/eestecantwerp"><i class="fa fa-facebook-square"></i> facebook</a>
+			</li>
 
-<li> <a href="/index.xml"><i class="fa fa-rss-square"></i> rss</a>
-</li>
-
-<li> <a href="mailto:board@eestec.be"><i class="fa fa-envelope-square"></i> contact</a>
-</li>
-
-
+			<li><a href="mailto:board@eestec.be"><i class="fa fa-envelope-square"></i> contact</a>
+			</li>
 		</div>
 	</ul>
 </div>
 
-	<div id="wrapper">
+<div id="wrapper">
 
-
-<div class="showcase-wrapper sticky">
-	
-	<div class="showcase-text">Welcome to EESTEC Antwerpen!</div>
-	
-</div>
-
-<div class="container">
-	
-	<!-- mounting point for the app -->
-	<app></app>
-	
-</div>
+<router-view></router-view>
 
 <footer>
 	<p class="text-muted credit">
-		<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="/img/cc.png" /></a> This work by <a xmlns:cc="http://creativecommons.org/ns#" href="www.eestec.be" property="cc:attributionName" rel="cc:attributionURL">EESTEC Antwerp</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+		<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="/static/img/cc.png" /></a> This work by <a xmlns:cc="http://creativecommons.org/ns#" href="www.eestec.be" property="cc:attributionName" rel="cc:attributionURL">EESTEC Antwerp</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
 	</p>
 </footer>
 </div>
 
+</div>
 
 <script type="text/javascript" src="/build/app.bundle.js"></script> <!-- important :) -->
 <script type="text/javascript" src="/static/js/jquery-2.2.0.min.js"></script>
