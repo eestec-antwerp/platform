@@ -22,6 +22,7 @@ import sparrow
 import api
 import model
 import special_handlers
+from util.mail import Mailer
 
 # Small utilities
 # ===============
@@ -37,6 +38,11 @@ default_config = {
         "host": "localhost",
         "port": 5432,
     },
+    "mails": {
+        "from_address": "admin@eestec.be",
+        "username": "admin@eestec.be",
+        "password": "yeah right not posting that one to github"
+    }
 }
 
 def parse_config(conf, default):
@@ -93,8 +99,11 @@ class EestecPlatform:
         self.logger = logging.getLogger("EESTEC")
         self.logger.setLevel(logging.DEBUG if config["debug"] else logging.INFO)
         self.logger.debug("EESTEC Platform webserver starting")
+        
+        self.mailer = Mailer(**config["mails"])
+        self.logger.info(f"Sending mail from {config['mails']['from_address']}")
 
-        classes = [model.User]
+        classes = [model.User, model.Article]
         self.model = sparrow.SparrowModel(ioloop, db_args=config["database"], debug=config["debug"], classes=classes, set_global_db=True)
         
         StaticClass = NoCacheStaticFileHandler if self.debug else tornado.web.StaticFileHandler
@@ -110,9 +119,10 @@ class EestecPlatform:
             (r'/(.*)', special_handlers.create_MainHandler(self)),
         ]
         
-        self.app = tornado.web.Application(routes, **tornado_app_settings)
+        self.app = tornado.web.Application(routes, **tornado_app_settings, debug=self.debug)
 
     def run(self):
+        self.ioloop.run_sync(self.mailer.connect)
         self.app.listen(self.config['port'])
         self.ioloop.start()
     

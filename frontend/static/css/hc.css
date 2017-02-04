@@ -86,8 +86,11 @@ p {
 }
 
 #wrapper {
-    padding-left: 250px;
-    transition: all .5s ease 0;
+	padding-left: 250px;
+	transition: all .5s ease 0;
+	
+	margin: 0 0 50px;
+	/* bottom = footer height */
 }
 
 .navbar {
@@ -339,7 +342,6 @@ pre {
     margin-bottom: 0;
     padding-bottom: 5px;
     padding-top: 5px;
-    margin-top: 40px;
     z-index: 1;
     color: #cdcdcd;
 }
@@ -718,15 +720,25 @@ time {
 
 /* Custom CSS no where else to put */
 
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+}
+
 .fade-enter-active, .fade-leave-active {
-  transition-property: opacity;
-  transition-duration: .15s;
+	transition-property: opacity;
+	transition-duration: .1s;
 }
 
 .fade-enter-active {
-/*   transition-delay: .s; */
+	transition-delay: .1s;
 }
 
-.fade-enter, .fade-leave-active {
-  opacity: 0
+.fade-enter, .fade-leave-to {
+	opacity: 0
 }

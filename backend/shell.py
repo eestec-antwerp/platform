@@ -63,7 +63,7 @@ class TodoPointer:
     location = None
 
 def shell_thread(**kwargs):
-    hist_loc = ".iffad_shell.history"
+    hist_loc = ".eestec_shell.history"
     console = InteractiveConsole()
     console.locals = locals()
     console.locals.update(kwargs)
@@ -129,7 +129,7 @@ def server_thread(srv):
 if __name__ == "__main__":
     config = get_config(options.config)
     config["tornado_app_settings"]["autoreload"] = False
-    srv = IFFAD(config)
+    srv = EestecPlatform(config)
 
     server = threading.Thread(target=server_thread, args=(srv,))
     shell = threading.Thread(target=shell_thread, kwargs={"srv": srv})

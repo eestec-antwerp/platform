@@ -4,6 +4,9 @@ import Vue from 'vue';
 import front from './components/front';
 import mainmenu from './components/mainmenu';
 import news from './components/news';
+import login from './components/login';
+import register from './components/register';
+import userdetails from './components/userdetails';
 
 var VueResource = require('vue-resource');
 Vue.use(VueResource);
@@ -15,7 +18,9 @@ var router = new VueRouter({
 	mode: 'history',
 	routes: [
 		{path: '/', component: front},
-		{path: '/news', component: news}
+		{path: '/news', component: news},
+		{path: '/register', component: register},
+		{path: '/userdetails', component: userdetails},
 	]
 });
 
@@ -31,5 +36,6 @@ var App = new Vue({
 	components: {
 		"front": front,
 		"mainmenu": mainmenu,
+		"login": login,
 	}
 }).$mount('#app');

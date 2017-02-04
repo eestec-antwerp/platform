@@ -1,5 +1,5 @@
 <template>
-<router-link class="article-summary" :to="{path: '/article/' + article.id + '/'}">
+<router-link class="article-summary" :to="{path: '/article/' + article.slug + '/'}">
 	<div>
 		<time class="pull-right post-list">{{article.date}}</time>
 		<div class="article-summary-title">{{article.title}}</div>

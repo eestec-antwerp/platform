@@ -12,12 +12,12 @@ export default {
 		return {
 			articles: [
 				{
-					id: "security-talk",
+					key: "security-talk",
 					date: "Some day?",
 					title: "Security talk blabla",
 					summary: "Bank van breda doet security stuff",
 				}, {
-					id: "new-website",
+					key: "new-website",
 					date: "Some other day?",
 					title: "We have new website",
 					summary: "Look at crazy Vue.js",

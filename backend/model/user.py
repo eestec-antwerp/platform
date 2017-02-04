@@ -12,6 +12,12 @@ def encrypt(password) -> str:
 def verify(password, hashed) -> bool:
     return passlib.hash.bcrypt.verify(password, hashed)
 
+class UserDetails(Entity):
+    key = UDID = KeyProperty()
+    interests = Property(List(str))
+    location = Property(str, required=False)
+    
+    
 class User(Entity):
     level_type = Enum("USER", "BOARD", "ADMIN")
     
@@ -19,3 +25,6 @@ class User(Entity):
     email = Property(str, sql_extra="UNIQUE")
     password = Property(str, json=False)
     name = Property(str)
+    level = Property(level_type)
+
+    
