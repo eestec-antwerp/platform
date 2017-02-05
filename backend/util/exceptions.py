@@ -23,6 +23,9 @@ def wrap_errors(method):
         except PlatformException as e:
             self.app.logger.error("PlatformException: " + str(e))
             req.write(json.dumps({"error": e.json_repr()}))
+        except sparrow.NotSingle as e:
+            self.app.logger.error("Sparrow Error: " + str(e))
+            req.write(json.dumps({"error": {"short": "not_single", "long": str(e)}}))
         except sparrow.Error as e:
             self.app.logger.error("Sparrow Error: " + str(e))
             req.write(json.dumps({"error": {"short": "sparrow_error", "long": str(e)}}))

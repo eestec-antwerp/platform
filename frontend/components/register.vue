@@ -9,13 +9,13 @@
 		
 		<form v-on:submit.prevent="register">
 			<div class="form-group">
-				<input type="email" class="form-control" id="reg_email_input" name="email" placeholder="Email">
+				<input type="email" class="form-control" v-model="email" name="email" placeholder="Email">
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" id="reg_name_input" name="name" placeholder="Full name">
+				<input type="text" class="form-control" v-model="name" name="name" placeholder="Full name">
 			</div>
 			<div class="form-group">
-				<input type="password" class="form-control" id="reg_password_input" name="password" placeholder="Password">
+				<input type="password" class="form-control" v-model="password" name="password" placeholder="Password">
 			</div>
 			<button type="submit" class="btn btn-default">Register</button>
 		</form>
@@ -28,13 +28,16 @@
 </template>
 
 <script>
-import static_alert from './static_alert'
+import static_alert from './static_alert';
 
 export default {
 	data() {
 		return {
-			"reg_status": null,
-			"reg_message": "",
+			reg_status: null,
+			reg_message: "",
+			email: "",
+			password: "",
+			name: "",
 		}
 	},
 	
@@ -65,7 +68,7 @@ export default {
 	},
 	
 	components: {
-		"static_alert": static_alert
+		static_alert: static_alert
 	}
 }
 

@@ -42,7 +42,8 @@ default_config = {
         "from_address": "admin@eestec.be",
         "username": "admin@eestec.be",
         "password": "yeah right not posting that one to github"
-    }
+    },
+    "base_url": "http://localhost:8080"
 }
 
 def parse_config(conf, default):

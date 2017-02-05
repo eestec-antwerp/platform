@@ -1,5 +1,6 @@
 
 import passlib.hash
+import secrets
 
 from sparrow import *
 from util.blocking import executor
@@ -26,5 +27,13 @@ class User(Entity):
     password = Property(str, json=False)
     name = Property(str)
     level = Property(level_type)
-
+    
+    registration_code = Property(str, json=False, required=False)
+    
+    def reset_registration_code(self):
+        self.registration_code = secrets.token_urlsafe(32)
+    
+    @property
+    def registration_path(self):
+        return f"/userdetails/{self.UID}?code={self.registration_code}"
     

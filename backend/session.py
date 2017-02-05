@@ -1,11 +1,10 @@
 
-import random
-import hashlib
+import secrets
 
 from sparrow import Unsafe
 
 from util.exceptions import *
-from model.user import *
+from model.user import User, verify
 
 class Session:
     # TODO automatic expiration of sessions? Map could get rather big...
@@ -27,14 +26,19 @@ class Session:
     async def new_session(cls, email, password):
         u = await User.get(User.email == Unsafe(email)).single()
 
-        if (await model.user.verify(password, u.password)):
+        if (await verify(password, u.password)):
             # Password is right
-            # TODO Code that survived since Overwatch, but still not sure
-            # whether this is actually safe :)
-            login_session = hashlib.md5(bytes(str(random.random())[2:] + "WowAnotherSaltFreelyAvailableOnGithub", "utf8")).hexdigest()
-            s = Session(login_session, u)
-            cls.sessions[login_session] = s
-            return s
+            return cls.new_free_session(u)
         else:
             raise PlatformException("wrong_password", "Wrong password")
-
+    
+    @classmethod
+    def new_free_session(cls, user):
+        login_session = secrets.token_urlsafe(32)
+        s = Session(login_session, user)
+        cls.sessions[login_session] = s
+        return s
+    
+    def to_json(self):
+        return {"UID": self.user.UID, "hash": self.hash}
+    
