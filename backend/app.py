@@ -23,6 +23,7 @@ import api
 import model
 import special_handlers
 from util.mail import Mailer
+from util.etc import *
 
 # Small utilities
 # ===============
@@ -100,9 +101,6 @@ class EestecPlatform:
         self.logger = logging.getLogger("EESTEC")
         self.logger.setLevel(logging.DEBUG if config["debug"] else logging.INFO)
         self.logger.debug("EESTEC Platform webserver starting")
-        
-        self.mailer = Mailer(**config["mails"])
-        self.logger.info(f"Sending mail from {config['mails']['from_address']}")
 
         classes = [model.User, model.Article]
         self.model = sparrow.SparrowModel(ioloop, db_args=config["database"], debug=config["debug"], classes=classes, set_global_db=True)
@@ -121,9 +119,15 @@ class EestecPlatform:
         ]
         
         self.app = tornado.web.Application(routes, **tornado_app_settings, debug=self.debug)
-
+    
+    @async_lazyprop
+    async def mailer(self):
+        self.logger.info(f"Sending mail from {self.config['mails']['from_address']}")
+        m = Mailer(**self.config["mails"])
+        await m.connect()
+        return m
+    
     def run(self):
-        self.ioloop.run_sync(self.mailer.connect)
         self.app.listen(self.config['port'])
         self.ioloop.start()
     

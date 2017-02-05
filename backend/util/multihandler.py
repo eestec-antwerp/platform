@@ -5,6 +5,7 @@ import json
 import tornado.web
 
 from .exceptions import *
+from .etc import *
 
 # no routes!
 def minihandler(methods, _func):
@@ -25,6 +26,10 @@ def minihandler(methods, _func):
                 traceback.print_exc()
                 self.write(str(e))
                 self.set_status(500, reason=e.short)
+        
+        @lazyprop
+        def json(self):
+            return json.loads(self.body)
         
         def __getattr__(self, attr):
             # I'm done with this shit

@@ -13,7 +13,9 @@ class PlatformException(Exception):
     
     def __str__(self):
         return json.dumps(self.json_repr())
-        
+
+access_denied = PlatformException("access_denied", "You are not permitted to perform this action")
+wrong_password = PlatformException("wrong_password", "Wrong password")
 
 def wrap_errors(method):
     @wraps(method)

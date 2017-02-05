@@ -45,12 +45,7 @@ export default {
 		// Called when login button is clicked
 		register: function() {
 			this.reg_status = null;
-			var alert = document.getElementById("reg_alert");
-		
-			let email = document.getElementById("reg_email_input").value;
-			let name = document.getElementById("reg_name_input").value;
-			let password = document.getElementById("reg_password_input").value;
-			let d = {"email": email, "name": name, "password": password}
+			let d = {"email": this.email, "name": this.name, "password": this.password}
 			
 			this.$http.post("/_user/register", d).then(answer => {
 				let body = JSON.parse(answer.body);

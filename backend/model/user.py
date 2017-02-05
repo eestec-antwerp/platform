@@ -13,21 +13,22 @@ def encrypt(password) -> str:
 def verify(password, hashed) -> bool:
     return passlib.hash.bcrypt.verify(password, hashed)
 
-class UserDetails(Entity):
-    key = UDID = KeyProperty()
-    interests = Property(List(str))
-    location = Property(str, required=False)
-    
     
 class User(Entity):
     level_type = Enum("USER", "BOARD", "ADMIN")
     
+    # Basics
     key = UID = KeyProperty()
     email = Property(str, sql_extra="UNIQUE")
     password = Property(str, json=False)
     name = Property(str)
     level = Property(level_type)
     
+    # Details
+    interests = Property(List(str), required=False)
+    location = Property(str, required=False)
+    
+    # Management stuff
     registration_code = Property(str, json=False, required=False)
     
     def reset_registration_code(self):

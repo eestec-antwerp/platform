@@ -1,27 +1,34 @@
 <template>
-<div class="login" v-if="state.login">
-	<h3>Hi user {{ state.login.UID }}</h3>
-	<button class="btn btn-default" v-on:click="logout">Log out</button>
-</div>
-<div class="login" v-else>
-	<h3>Log in</h3>
-	<form v-on:submit.prevent="login">
-		<div class="form-group" :class="{'has-error': login_wrong == 'email'}">
-			<input type="email" class="form-control" v-model="email" name="email" placeholder="Email">
-		</div>
-		<div class="form-group" :class="{'has-error': login_wrong == 'password'}">
-			<input type="password" class="form-control" v-model="password" name="password" placeholder="Password">
-		</div>
-		<button type="submit" class="btn btn-default">Log in</button>
-		<router-link to="/register"><button type="button" class="btn btn-default">Register</button></router-link>
-	</form>
-	
-	<static_alert id="reg_alert" :status="login_status" :message="login_message"/>
-</div>
+<transition name="fade" mode="out-in">
+	<div class="login" v-if="state.current_user" key="loggedin">
+		<h4>Hi {{ state.current_user.name }}!</h4>
+		<button class="btn btn-default" v-on:click="logout">Log out</button>
+		<router-link :to="'/userdetails/' + state.session.UID">
+			<button class="btn btn-default">My Profile</button>
+		</router-link>
+	</div>
+	<div class="login" v-else key="notloggedin">
+		<h4>Log in</h4>
+		<form v-on:submit.prevent="login">
+			<div class="form-group" :class="{'has-error': login_wrong == 'email'}">
+				<input type="email" class="form-control" v-model="email" name="email" placeholder="Email">
+			</div>
+			<div class="form-group" :class="{'has-error': login_wrong == 'password'}">
+				<input type="password" class="form-control" v-model="password" name="password" placeholder="Password">
+			</div>
+			<button type="submit" class="btn btn-default">Log in</button>
+			<router-link to="/register"><button type="button" class="btn btn-default">Register</button></router-link>
+		</form>
+		
+		<static_alert id="reg_alert" :status="login_status" :message="login_message"/>
+	</div>
+</transition>
 </template>
 
 <script>
-import static_alert from './static_alert';
+import static_alert from './static_alert'
+
+import User from '../model/user'
 
 export default {
 	data: () => {
@@ -32,6 +39,7 @@ export default {
 			login_message: "",
 			email: "",
 			password: "",
+			User: User
 		};
 	},
 	methods: {
@@ -44,9 +52,8 @@ export default {
 			this.$http.post("/_user/login", d).then(answer => {
 				let body = JSON.parse(answer.body)
 				
-				if (body.login) {
-					this.state.cookies.set("login", body.login)
-					this.state.login = body.login
+				if (body.session) {
+					this.state.login(body.session)
 				} else if (body.error) {
 					this.login_status = "warning"
 					if (body.error.short == "wrong_password") {
@@ -63,10 +70,9 @@ export default {
 		},
 		
 		logout: function() {
-			let d = {"login": this.state.login}
-			this.$http.post("/_user/logout", this.state.add_login(d))
-			this.state.login = undefined
-			this.state.cookies.remove("login")
+			let d = {"login": this.state.session}
+			this.$http.post("/_user/logout", this.state.add_session(d))
+			this.state.logout()
 		}
 	},
 	components: {
@@ -79,8 +85,12 @@ export default {
 .login {
 	padding: 1px 20px 20px 20px;
 
-	h3 {
+	h4 {
 		padding-bottom: 10px;
+	}
+	
+	.alert {
+		margin-top: 15px;
 	}
 }
 </style>

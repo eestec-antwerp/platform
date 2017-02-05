@@ -30,7 +30,7 @@ class Session:
             # Password is right
             return cls.new_free_session(u)
         else:
-            raise PlatformException("wrong_password", "Wrong password")
+            raise wrong_password
     
     @classmethod
     def new_free_session(cls, user):
@@ -38,6 +38,10 @@ class Session:
         s = Session(login_session, user)
         cls.sessions[login_session] = s
         return s
+    
+    def assert_same_UID(self, UID):
+        if self.user.UID != UID:
+            raise access_denied
     
     def to_json(self):
         return {"UID": self.user.UID, "hash": self.hash}
